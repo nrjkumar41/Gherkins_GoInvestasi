@@ -8,11 +8,11 @@ import java.sql.Statement;
 
 import org.junit.Test;
 
-public class DB_METHODS_gold_transactions {
+public class DB_METHODS_Users {
 	// JDBC driver name and database URL
 	public static ResultSet rs;
 	public static final String JDBC_DRIVER = "org.postgresql.Driver";
-	public static final String DB_URL = "staging-db.pluang.com/pluang_gold_transactions";
+	public static final String DB_URL = "staging-db.pluang.com/pluang_users";
 	
 
 	// Database credentials
@@ -20,12 +20,9 @@ public class DB_METHODS_gold_transactions {
 	public static final String PASS = "FtEv3Xx4Epx4CE5G";
 	public static Connection conn = null;
 	public static  Statement stmt = null;
-	public static String Db_Buy_Price;
-	public static String Db_Sell_Price;
-	public static  String Db_Buy_Price_Q="select sell_price from master_gold_prices order by updated desc limit 1";
-	public static String Db_Sell_Price_Q="select buy_back_price from master_gold_prices order by updated desc limit 1";
-	public static String Db_Gold_Balance="select sum(quantity) from gold_batches where account_id="+DB_METHODS_Users.Db_User_AccountId +"AND transaction_type='BUY'";
-
+	public static  String Db_User_Phone="select id from users where phone='+628123450000'";
+	public static String Db_User_OAuth="select access_token from oauth_tokens where user_id IN (select id from users where phone='+628123450000') order by created desc limit 1";
+	public static String Db_User_AccountId="select id from accounts where user_id IN (select id from users where phone='+628123450000')";
 	@Test
 	public static void db_connect() {
 
@@ -45,18 +42,16 @@ public class DB_METHODS_gold_transactions {
 
 		
 			
-			rs = stmt.executeQuery(Db_Buy_Price_Q);
+			rs = stmt.executeQuery(Db_User_OAuth);
 			while (rs.next()) {
-				Db_Buy_Price_Q = rs.getString(1);
-				Db_Buy_Price=Db_Buy_Price_Q;
-				System.out.println("Buy Price from Database : " + Db_Buy_Price);
+				Db_User_OAuth = rs.getString(1);
+				System.out.println("User AuthToken from Database : " + Db_User_OAuth);
 				
 			}
-			rs = stmt.executeQuery(Db_Sell_Price_Q);
+			rs = stmt.executeQuery(Db_User_AccountId);
 			while (rs.next()) {
-				Db_Sell_Price_Q = rs.getString(1);
-				Db_Sell_Price=Db_Sell_Price_Q;
-				System.out.println("Sell Price from Database : " + Db_Sell_Price);
+				Db_User_AccountId = rs.getString(1);
+				System.out.println("User AccountId from Database : " + Db_User_AccountId);
 				
 			}
 
