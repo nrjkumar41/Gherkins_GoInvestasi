@@ -11,27 +11,22 @@ import org.junit.Test;
 public class DB_METHODS {
 	// JDBC driver name and database URL
 	public static ResultSet rs;
-	public static int client_id = 181;
 	public static final String JDBC_DRIVER = "org.postgresql.Driver";
-	public static final String DB_URL = "staging-db.pluang.com/pluang_users";
-	// static final String DB_URL =
-	// "http://api.crash.amber.infeedo.com/phpmyadmin/?Username=pmuser&Password=pmuser123";
-	static String All_People;
-	public static String Total_Chats_sent;
-	public static String Chat_Responded;
-	public static String People_Covered;
-	public static String DOA_Available;
+	public static final String DB_URL = "staging-db.pluang.com/pluang_gold_transactions";
+	
 
 	// Database credentials
 	public static final String USER = "postgres";
 	public static final String PASS = "FtEv3Xx4Epx4CE5G";
 	public static Connection conn = null;
-	public  Statement stmt = null;
-
-	public  String People_Covered_Q = "SELECT * FROM users limit 1" ;
+	public static  Statement stmt = null;
+	public static String Db_Buy_Price;
+	public static String Db_Sell_Price;
+	public static  String Db_Buy_Price_Q="select sell_price from master_gold_prices order by updated desc limit 1";
+	public static String Db_Sell_Price_Q="select buy_back_price from master_gold_prices order by updated desc limit 1";
 
 	@Test
-	public  void db_connect() {
+	public static void db_connect() {
 
 		try {
 
@@ -47,10 +42,21 @@ public class DB_METHODS {
 			System.out.println("Creating statement...");
 			stmt = conn.createStatement();
 
-			rs = stmt.executeQuery(People_Covered_Q);
+		
+			
+			rs = stmt.executeQuery(Db_Buy_Price_Q);
 			while (rs.next()) {
-				People_Covered = rs.getString("email");
-				System.out.println("Total Employee Covered : " + People_Covered);
+				Db_Buy_Price_Q = rs.getString(1);
+				Db_Buy_Price=Db_Buy_Price_Q;
+				System.out.println("Buy Price from Database : " + Db_Buy_Price);
+				
+			}
+			rs = stmt.executeQuery(Db_Sell_Price_Q);
+			while (rs.next()) {
+				Db_Sell_Price_Q = rs.getString(1);
+				Db_Sell_Price=Db_Sell_Price_Q;
+				System.out.println("Sell Price from Database : " + Db_Sell_Price);
+				
 			}
 
 
@@ -77,5 +83,8 @@ public class DB_METHODS {
 		} // end try
 
 		System.out.println("Goodbye!");
+	
+	return;
 	}// end main
+
 }
