@@ -1,11 +1,12 @@
 package stepDefinations;
 
+import java.text.DecimalFormat;
+
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
 
 import DataBase.DB_METHODS_Users;
 import DataBase.DB_METHODS_gold_transactions;
@@ -17,15 +18,17 @@ public class OpenBrowser_stepDefination {
 
 	WebDriver driver;
 	public static long web_sellPrice;
-	public static long web_goldAmount;
-	
+	public static double web_goldAmount;
+	public static double web_Amount;
+	private static  DecimalFormat df = new DecimalFormat("0.00");
 
 	@Given("^User is already GoInvestasi user$")
 	public void user_is_already_GoInvestasi_user() throws Throwable {
-		DB_METHODS_gold_transactions.db_connect();
-		DB_METHODS_Users.db_connect();
 		
-
+		DB_METHODS_Users.db_connect();
+		DB_METHODS_gold_transactions.db_connect();
+		
+		
 		System.setProperty("webdriver.chrome.driver",
 				"C:\\Users\\nrjku\\eclipse-workspace\\Sample_Gherkins\\Drivers\\Windows\\chromedriver.exe");
 		ChromeOptions chromeOptions = new ChromeOptions();
@@ -44,7 +47,16 @@ public class OpenBrowser_stepDefination {
 		driver.getTitle();
 		System.out.println(driver.getTitle());
 		Assert.assertEquals("GoInvestasi - The Simplest Way To Invest", driver.getTitle());
-
+		String gold=driver.findElement(By.id("mod-currency-formatter-2")).getText().replace(".", "").replace(",", ".");
+		System.out.println(gold);
+		web_goldAmount = Double.valueOf(gold);
+		
+//		Assert.assertEquals((Math.round(Double.valueOf(DB_METHODS_gold_transactions.Db_Gold_Balance) * 100.0) / 100.0), web_goldAmount);
+//		Assert.assertEquals(Long.parseLong(DB_METHODS_gold_transactions.Db_Gold_Balance), web_goldAmount);
+		System.out.println(web_goldAmount);
+		System.out.println((Math.round(Double.parseDouble(DB_METHODS_gold_transactions.Db_Gold_Balance) * 100.0) / 100.0));
+		web_Amount= web_goldAmount*web_sellPrice;
+		System.out.println(web_Amount);
 	}
 
 	@Then("^User fetch the BuySell price$")
@@ -59,7 +71,7 @@ public class OpenBrowser_stepDefination {
 		System.out.println("Website Sell Price: "+ web_sellPrice);
 		
 		Assert.assertEquals(Long.parseLong(DB_METHODS_gold_transactions.Db_Sell_Price), web_sellPrice);
-		return;
+		
 	}
 
 	@Then("^User clicks on the Buy Gold$")

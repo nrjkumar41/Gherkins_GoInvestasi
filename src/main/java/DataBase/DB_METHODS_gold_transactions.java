@@ -60,6 +60,12 @@ public class DB_METHODS_gold_transactions {
 				
 			}
 
+			rs = stmt.executeQuery(Db_Gold_Balance);
+			while (rs.next()) {
+				Db_Gold_Balance = rs.getString(1);
+				System.out.println("Gold Balance from Database : " + Db_Gold_Balance);
+				
+			}
 
 			rs.close();
 		} catch (SQLException se) {
