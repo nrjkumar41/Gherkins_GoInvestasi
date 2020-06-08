@@ -1,7 +1,5 @@
 package stepDefinations;
 
-import java.text.DecimalFormat;
-
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,14 +17,15 @@ public class OpenBrowser_stepDefination extends Base{
 
 	WebDriver driver;
 	public static long web_sellPrice;
+	public static long web_buyPrice;
 	public static double web_goldAmount;
 	public static double web_Amount;
 
 	@Given("^User is already GoInvestasi user$")
 	public void user_is_already_GoInvestasi_user() throws Throwable {
 		
-//		DB_METHODS_Users.db_connect();
-//		DB_METHODS_gold_transactions.db_connect();
+		DB_METHODS_Users.db_connect();
+		DB_METHODS_gold_transactions.db_connect();
 		
 		
 		System.setProperty("webdriver.chrome.driver",
@@ -72,6 +71,18 @@ public class OpenBrowser_stepDefination extends Base{
 		
 		Assert.assertEquals(Long.parseLong(DB_METHODS_gold_transactions.Db_Sell_Price), web_sellPrice);
 		
+		
+		
+		String bprice=driver.findElement(By.id("mod-currency-formatter-5")).getText().replaceAll("\\D+","");
+		System.out.println(bprice);
+		String buyPrice=price.replaceAll("[.][0-9]+$", "");
+		System.out.println(buyPrice);
+		web_buyPrice=Long.parseLong(buyPrice);
+		
+		System.out.println("Website Buy Price: "+ web_buyPrice);
+		
+		Assert.assertEquals(Long.parseLong(DB_METHODS_gold_transactions.Db_Buy_Price), web_buyPrice);
+		return;
 	}
 
 	@Then("^User clicks on the Buy Gold$")

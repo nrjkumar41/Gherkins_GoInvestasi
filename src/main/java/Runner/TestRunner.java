@@ -7,10 +7,9 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-		features = {"C:/Users/nrjku/eclipse-workspace/Sample_Gherkins/src/main/java/Feature_file/01_OpenBrowser.feature","C:/Users/nrjku/eclipse-workspace/Sample_Gherkins/src/main/java/Feature_file/02_Buy_Gold_HomeScreen.feature"},
-//		features = "C:\\Users\\nrjku\\eclipse-workspace\\Sample_Gherkins\\src\\main\\java\\Feature_file\\01_OpenBrowser.feature",
-//		features = "C:\\Users\\nrjku\\eclipse-workspace\\Sample_Gherkins\\src\\main\\java\\Feature_file\\02_Buy_Gold_HomeScreen.feature", //the path of the feature files
-		glue={"stepDefinations"} //the path of the step definition files
+
+		features = "C:\\Users\\nrjku\\eclipse-workspace\\Sample_Gherkins\\src\\main\\java\\Feature_file\\01_OpenBrowser.feature", //the path of the feature files
+		glue={"stepDefinitions"} //the path of the step definition files
 //		format= {"pretty","html:test-outout", "json:json_output/cucumber.json", "junit:junit_xml/cucumber.xml"}, //to generate different types of reporting
 //		monochrome = true, //display the console output in a proper readable format
 //		strict = true, //it will check if any step is not defined in step definition file
