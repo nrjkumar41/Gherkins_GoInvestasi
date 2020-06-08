@@ -8,25 +8,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import Base.Base;
 import DataBase.DB_METHODS_Users;
 import DataBase.DB_METHODS_gold_transactions;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
-public class OpenBrowser_stepDefination {
+public class OpenBrowser_stepDefination extends Base{
 
 	WebDriver driver;
 	public static long web_sellPrice;
 	public static double web_goldAmount;
 	public static double web_Amount;
-	private static  DecimalFormat df = new DecimalFormat("0.00");
 
 	@Given("^User is already GoInvestasi user$")
 	public void user_is_already_GoInvestasi_user() throws Throwable {
 		
-		DB_METHODS_Users.db_connect();
-		DB_METHODS_gold_transactions.db_connect();
+//		DB_METHODS_Users.db_connect();
+//		DB_METHODS_gold_transactions.db_connect();
 		
 		
 		System.setProperty("webdriver.chrome.driver",
