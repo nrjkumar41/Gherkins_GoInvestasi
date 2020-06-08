@@ -38,7 +38,7 @@ public class Buy_Gold_HomeScreen_stepDefination extends Base {
 		String Total_amount_buy_page = driver.findElement(By.xpath("//span[@id='mod-currency-formatter-2']")).getText()
 				.replaceAll("\\D+", "");
 		System.out.println("Total Amount on Buy transaction Page : " + Total_amount_buy_page);
-//	    Assert.assertEquals(OpenBrowser_stepDefination.web_Amount, Long.parseLong(buy_page_price));
+//	    Assert.assertEquals(OpenBrowser_stepDefination.web_Amount, Long.parseLong(Total_amount_buy_page));
 	}
 
 	@Then("^Enter Gold Gram to Purchase$")
@@ -63,13 +63,14 @@ public class Buy_Gold_HomeScreen_stepDefination extends Base {
 		System.out.println("Review Amount Gold Buy" + Review_Amount_Gold_Buy);
 		Assert.assertEquals(Long.parseLong(Review_Amount_Gold_Buy) / (OpenBrowser_stepDefination.web_buyPrice),
 				Entred_Gold_Buy);
-
+		
 	}
 
 	@Then("^Assert The Review Transaction$")
 	public void assert_The_Review_Transaction() {
 
-		System.out.println("Review Transaction Done");
+		System.out.println("Review Buy Transaction Done");
+		driver.findElement(By.xpath("//button[contains(text(),'Confirm')]")).click();
 	}
 
 	@Then("^Approve GoPay$")
